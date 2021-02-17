@@ -352,6 +352,10 @@ function Home() {
 
     const [currentGist, setCurrentGist] = useState(undefined);
 
+    const [scroll, setScroll] = useState(1);
+
+
+
     useEffect(() => {
         const loadQuestions = async () => {
             setIsLoading(true);
@@ -376,6 +380,15 @@ function Home() {
         setReload(Math.random());
     };
 
+    const handleScroll = (e) => {
+        const { scrollTop, clientHeight, scrollHeight } = e.target;
+        
+        if(scrollTop - scrollHeight === clientHeight) {
+
+            setScroll(scroll + 1);
+        };
+    }
+
     return (
         <>
             {isLoading && <Loading />}
@@ -391,7 +404,7 @@ function Home() {
                     <Logo src={logo} alt="logo do senai" onClick={handleReload} />
                     <IconSignOut onClick={handleSignOut} />
                 </Header>
-                <Content>
+                <Content onScroll={handleScroll}>
                     <ProfileContainer>
                         <Profile handleReload={handleReload} setIsLoading={setIsLoading} />
                     </ProfileContainer>
